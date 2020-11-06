@@ -22,42 +22,31 @@ window = gui.Window(title="Calculus", layout=[[gui.Text("Please select if you wa
 event, values = window.read()
 window.close
 gui.Popup(values['-SEL-'], values['-EQ-'])
-
-def Split():
-	if Selection == False:
-		coeffpattern = '\s*(^|(\+|-))\s*\d+(.\d+)?\s*((?=x)|$)'
-											  
-
-
-
+ 
 Selection = values['-SEL-']
 Equation = re.sub('\s*((?<=((\+|-)))|^)\s*x', '1x', values['-EQ-']) #REGEX to add 1 to any x with no coefficient
 Equation = re.sub('\s*x(?!\^)', 'x^1', Equation) #REGEX to add x^1 to any x with no exponent
 gui.Popup(Equation)
-
+ 
 coefficient = [] #creates empty list to add the coefficients to
 exponent = []    #creates empty list to add the exponents to
 newcoeff = []
 newexp = []
-FL = ""
-LL = ""
-
-if Selection == False:
-	window2 = gui.Window(title="Calculus", layout=[[gui.Text("Integrate between: ")], [gui.Text("First Limit: "), gui.Input(key='-FL-'), gui.Text("Last Limit: "), gui.Input(key='-LL-')], [gui.Button("Go")]])
-	event, values = window2.read()
-	FL = values['-FL-']
-	LL = values['-LL-']
-else:
-	coeffpattern = '\s*(^|(\+|-))\s*\d+(.\d+)?\s*((?=x))'
-
-coeff = re.finditer(coeffpattern, Equation, re.MULTILINE) #REGEX to find every number before an x but after an exponent
-exp = re.finditer('\s*(?<=x\^)\s*(\+|-)*\s*\d+(\.\d+)?', Equation, re.MULTILINE)  #REGEX to find every exponent after a ^ symbol but before the next coefficient
-
-for matchnum, match in enumerate(coeff, start=1):
-	coefficient.append(match.group()) #takes all coefficients from the equation and appends them to the coefficients list
-for matchnum, match in enumerate(exp, start=1):
-	exponent.append(match.group()) #takes all exponents from the equation and appends them to the exponents list
-print (coefficient, exponent)
+ 
+def Split():
+    if Selection == False:
+        coeffpattern = '\s*(^|(\+|-))\s*\d+(.\d+)?\s*((?=x)|$)'
+    else:
+        coeffpattern = '\s*(^|(\+|-))\s*\d+(.\d+)?\s*((?=x))'
+ 
+    coeff = re.finditer(coeffpattern, Equation, re.MULTILINE) #REGEX to find every number before an x but after an exponent
+    exp = re.finditer('\s*(?<=x\^)\s*(\+|-)*\s*\d+(\.\d+)?', Equation, re.MULTILINE)  #REGEX to find every exponent after a ^ symbol but before the next coefficient
+ 
+    for matchnum, match in enumerate(coeff, start=1):
+        coefficient.append(match.group()) #takes all coefficients from the equation and appends them to the coefficients list
+    for matchnum, match in enumerate(exp, start=1):
+        exponent.append(match.group()) #takes all exponents from the equation and appends them to the exponents list
+    print (coefficient, exponent)
 
 def fractions(fraction):
 	parts = fraction.split("/")
