@@ -35,29 +35,18 @@ newexp = []
  
 def Split():
     if Selection == False:
-        coeffpattern = '\s*(^|(\+|-))\s*\d+(.\d+)?\s*((?=x)|$)'
+        coeffpattern = '\s*(^|(\+|-))\s*\d+([\.\/]\d+)?\s*((?=x)|$)' #checked and works with fractions
     else:
-        coeffpattern = '\s*(^|(\+|-))\s*\d+(.\d+)?\s*((?=x))'
+        coeffpattern = '\s*(^|(\+|-))\s*\d+([\.\/]\d+)?\s*((?=x))' #checked and works with fractions
  
     coeff = re.finditer(coeffpattern, Equation, re.MULTILINE) #REGEX to find every number before an x but after an exponent
-    exp = re.finditer('\s*(?<=x\^)\s*(\+|-)*\s*\d+(\.\d+)?', Equation, re.MULTILINE)  #REGEX to find every exponent after a ^ symbol but before the next coefficient
+    exp = re.finditer('\s*(?<=x\^)\s*(\+|-)*\s*\d+([\.\/]\d+)?', Equation, re.MULTILINE)  #REGEX to find every exponent after a ^ symbol but before the next coefficient
  
     for matchnum, match in enumerate(coeff, start=1):
         coefficient.append(match.group()) #takes all coefficients from the equation and appends them to the coefficients list
     for matchnum, match in enumerate(exp, start=1):
         exponent.append(match.group()) #takes all exponents from the equation and appends them to the exponents list
     print (coefficient, exponent)
-
-def fractions(fraction):
-	parts = fraction.split("/")
-	return float(parts[0]) / float(parts[1])
-
-	for i in range(0, len(coefficient) - 1):
-		if "/" in coefficient[i]:
-			coefficient[i] = fractions(coefficient[i] - 1)
-	if "/" in exponent[i]:
-		exponent[i] = fractions(exponent[i])
-	gui.popup(coefficient, exponent)
 
 def Differentiation():
 
@@ -91,12 +80,34 @@ def FinalAnswer():
 	answer = re.match('^.*(?=.$)', answer)
 	gui.Popup(answer.group(0))
 
-
 Split()
+def fractions(fraction):
+	parts = fraction.split("/")
+	return float(parts[0]) / float(parts[1])
+if Selection == False:
+	for i in range(0, len(coefficient) - 1):
+		if "/" in coefficient[i]:
+			coefficient[i] = fractions(coefficient[i])
+		if "/" in exponent[i]:
+			exponent[i] = fractions(exponent[i])
+else:
+		for i in range(0, len(coefficient)):
+			if "/" in coefficient[i]:
+				coefficient[i] = fractions(coefficient[i])
+			if "/" in exponent[i]:
+				exponent[i] = fractions(exponent[i])
+
+gui.popup(coefficient, exponent)
 if Selection == True:
 	Differentiation()
 elif Selection == False:
 	Integration()
+
+
+
+
+
+
 
 FinalAnswer()
 
