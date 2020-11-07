@@ -26,12 +26,22 @@ gui.Popup(values['-SEL-'], values['-EQ-'])
 Selection = values['-SEL-']
 Equation = re.sub('\s*((?<=((\+|-)))|^)\s*x', '1x', values['-EQ-']) #REGEX to add 1 to any x with no coefficient
 Equation = re.sub('\s*x(?!\^)', 'x^1', Equation) #REGEX to add x^1 to any x with no exponent
+if bool(re.match('\d$', Equation)) == False:
+	Equation = Equation + "x^0"
 gui.Popup(Equation)
  
 coefficient = [] #creates empty list to add the coefficients to
 exponent = []    #creates empty list to add the exponents to
 newcoeff = []
 newexp = []
+UL = 0.0
+LL = 0.0
+
+if Selection == False:
+	window2 = gui.Window(title="Integral Limiters", layout=[[gui.Text("Please enter upper and lower bounds to integrate between")], [gui.Text("Lower Limit:"), gui.Input(key='-LL-'), gui.Text("Upper Limit"), gui.Input(key='-UL-')], [gui.Button("Go")]])
+	event, values = window2.read()
+	UL = float(values['-UL-'])
+	LL = float(values['-LL-'])
  
 def Split():
     if Selection == False:
@@ -60,8 +70,8 @@ def Differentiation():
 	gui.Popup(newcoeff, newexp)
 
 def Integration():
-	for i in range(0, len(coefficient) - 1):
-		newcoeff.append(float(coefficient[i]) / float(exponent[i]) + 1)
+	for i in range(0, len(coefficient)):
+		newcoeff.append(float(coefficient[i]) / (float(exponent[i]) + 1))
 		if newcoeff[i] == math.floor(newcoeff[i]):
 			newcoeff[i] = int(newcoeff[i])
 		newexp.append(float(exponent[i]) + 1)
@@ -70,15 +80,36 @@ def Integration():
 	gui.Popup(newcoeff, newexp)
 
 def FinalAnswer():
-	answer = ""
-	for i in range(0, len(newexp)):
-		if (newcoeff[i] > 0) and (i > 0):
-			answer += "+" + str(newcoeff[i]) + "x^" + str(newexp[i])
-		else:
-			answer += str(newcoeff[i]) + "x^" + str(newexp[i])
-	answer = re.sub('\s*\^[10]', "", answer)
-	answer = re.match('^.*(?=.$)', answer)
-	gui.Popup(answer.group(0))
+
+	
+	if Selection == True:
+		answer = ""
+		for i in range(0, len(newexp)):
+			if (newcoeff[i] > 0) and (i > 0):
+				answer += "+" + str(newcoeff[i]) + "x^" + str(newexp[i])
+			else:
+				answer += str(newcoeff[i]) + "x^" + str(newexp[i])
+		answer = re.sub('\s*\^[10]', "", answer)
+		answer = re.match('^.*(?=.$)', answer)
+		gui.Popup(answer.group(0))
+	else:
+		answer = 0.0
+		upper = 0.0
+		lower = 0.0
+		for i in range(0, len(newexp)):
+			if newexp[i] != 1:
+				upper += newcoeff[i] * UL ** newexp[i]
+				lower += newcoeff[i] * LL ** newexp[i]
+			else:
+				upper += newcoeff[i]
+				lower += newcoeff[i]
+		answer = upper - lower
+		if float(answer) == math.floor(answer):
+			answer = int(answer)
+		print (answer)
+		gui.Popup(answer)
+
+	
 
 Split()
 def fractions(fraction):
