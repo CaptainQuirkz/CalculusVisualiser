@@ -3,6 +3,7 @@ import matplotlib as mpl
 import PySimpleGUI as gui
 import re
 import math
+import numpy as np
 mpl.use('TkAgg')
 
 
@@ -63,7 +64,7 @@ def Split():
 def Differentiation():
 
 	for i in range(0, len(coefficient)):
-		newcoeff.append(float(coefficient[i]) * float(exponent[i]))
+		newcoeff.append(np.float128(coefficient[i]) * np.float128(exponent[i]))
 		if newcoeff[i] == math.floor(newcoeff[i]):
 			newcoeff[i] = int(newcoeff[i])
 		newexp.append(float(exponent[i]) - 1)
@@ -103,8 +104,8 @@ def FinalAnswer():
 				upper += newcoeff[i] * (UL ** newexp[i])
 				lower += newcoeff[i] * (LL ** newexp[i])
 			else:
-				upper += newcoeff[i]
-				lower += newcoeff[i]
+				upper += newcoeff[i] * UL
+				lower += newcoeff[i] * LL
 		answer = upper - lower
 		if float(answer) == math.floor(answer):
 			answer = int(answer)
