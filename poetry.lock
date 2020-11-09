@@ -1,0 +1,17 @@
+[[package]]
+category = "main"
+description = "GUI SDK Launched in 2018. It's 2020 and PySimpleGUI is actively developed and supported. Super-simple to create custom GUI's. 200+ Demo programs & Cookbook for rapid start. Extensive documentation. Main doc is www.PySimpleGUI.org.  Examples using Machine Learning(GUI, OpenCV Integration,  Chatterbot), Rainmeter Style Floating Desktop Widgets, Matplotlib + Pyplot integration, add GUI to command line scripts, PDF & Image Viewer. Great for beginners as well as advanced GUI programmers"
+name = "pysimplegui"
+optional = false
+python-versions = "*"
+version = "4.30.0"
+
+[metadata]
+content-hash = "a321c38e97ccd373a52e73d1ecc1524ebef0d2c587d4c07f8941636cc6e97057"
+python-versions = "^3.8"
+
+[metadata.files]
+pysimplegui = [
+    {file = "PySimpleGUI-4.30.0-py3-none-any.whl", hash = "sha256:181b9e65e9ddb4e85c1f0ffaff0d0c7ade0d1571158a4a979ebd4e006d870533"},
+    {file = "PySimpleGUI-4.30.0.tar.gz", hash = "sha256:9d8e6b8c4996c2478191b66559f00ef25f366e17ed709b5f6aa6a35a8f490e4f"},
+]
