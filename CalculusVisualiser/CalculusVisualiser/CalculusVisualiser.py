@@ -5,7 +5,7 @@ import re
 import math
 mpl.use('TkAgg')
 
-  
+
 
 window = gui.Window(title="Calculus", layout=[[gui.Text("Please select if you want t ovisualise Diffferentiation or Integration")],
 											  [gui.Radio("Differentiation", "selection", key='-SEL-'), gui.Radio("Integration", "selection",)],
@@ -17,12 +17,14 @@ window = gui.Window(title="Calculus", layout=[[gui.Text("Please select if you wa
 											  [gui.Text("###PLACE WORKED SOLUTION HERE###")],
 											  [gui.Text("Final Answer:")],
 											  [gui.Text("###PLACE ANSWER HERE###")],
-											  [gui.Text("###PLACE SOLVED GRAPH HERE###")]], margins=(500,300))
+											  [gui.Text("###PLACE SOLVED GRAPH HERE###")]], margins=(200,300))
 
 event, values = window.read()
 window.close
 gui.Popup(values['-SEL-'], values['-EQ-'])
- 
+if values['-EQ-'] == "":
+  values['-EQ-'] = "5/4x^-3+7.39x^5/2-3.34"
+  
 Selection = values['-SEL-']
 Equation = re.sub('\s*((?<=((\+|-)))|^)\s*x', '1x', values['-EQ-']) #REGEX to add 1 to any x with no coefficient
 Equation = re.sub('\s*x(?!\^)', 'x^1', Equation) #REGEX to add x^1 to any x with no exponent
@@ -98,8 +100,8 @@ def FinalAnswer():
 		lower = 0.0
 		for i in range(0, len(newexp)):
 			if newexp[i] != 1:
-				upper += newcoeff[i] * UL ** newexp[i]
-				lower += newcoeff[i] * LL ** newexp[i]
+				upper += newcoeff[i] * (UL ** newexp[i])
+				lower += newcoeff[i] * (LL ** newexp[i])
 			else:
 				upper += newcoeff[i]
 				lower += newcoeff[i]
