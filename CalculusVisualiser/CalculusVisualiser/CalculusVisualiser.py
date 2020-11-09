@@ -50,7 +50,7 @@ def Split():
         coeffpattern = '\s*(^|(\+|-))\s*\d+([\.\/]\d+)?\s*((?=x))' #checked and works with fractions
  
     coeff = re.finditer(coeffpattern, Equation, re.MULTILINE) #REGEX to find every number before an x but after an exponent
-    exp = re.finditer('\s*(?<=x\^)\s*(\+|-)*\s*\d+([\.\/]\d+)?', Equation, re.MULTILINE)  #REGEX to find every exponent after a ^ symbol but before the next coefficient
+    exp = re.finditer('\s*(?<=x\^)\s*[\+-]*\s*\d+([\.\/]\d+)?', Equation, re.MULTILINE)  #REGEX to find every exponent after a ^ symbol but before the next coefficient
  
     for matchnum, match in enumerate(coeff, start=1):
         coefficient.append(match.group()) #takes all coefficients from the equation and appends them to the coefficients list
