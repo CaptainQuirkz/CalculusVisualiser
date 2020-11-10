@@ -18,7 +18,7 @@ window = gui.Window(title="Calculus", layout=[[gui.Text("Please select if you wa
 											  [gui.Text("###PLACE WORKED SOLUTION HERE###")],
 											  [gui.Text("Final Answer:")],
 											  [gui.Text("###PLACE ANSWER HERE###")],
-											  [gui.Text("###PLACE SOLVED GRAPH HERE###")]], margins=(200,300))
+											  [gui.Text("###PLACE SOLVED GRAPH HERE###")]], margins=(200,200))
 
 event, values = window.read()
 window.close
@@ -41,7 +41,7 @@ UL = 0.0
 LL = 0.0
 
 if Selection == False:
-	window2 = gui.Window(title="Integral Limiters", layout=[[gui.Text("Please enter upper and lower bounds to integrate between")], [gui.Text("Lower Limit:"), gui.Input(key='-LL-'), gui.Text("Upper Limit"), gui.Input(key='-UL-')], [gui.Button("Go")]])
+	window2 = gui.Window(title="Integral Limiters", layout=[[gui.Text("Please enter upper and lower bounds to integrate between")], [gui.Text("Lower Limit:"), gui.Input(key='-LL-', size=(20,20)), gui.Text("Upper Limit"), gui.Input(key='-UL-', size=(20,20))], [gui.Button("Go")]])
 	event, values = window2.read()
 	UL = float(values['-UL-'])
 	LL = float(values['-LL-'])
