@@ -1,0 +1,2 @@
+run = "python CalculusVisualiser/CalculusVisualiser/CalculusVisualiser.py"
+language = "python"
