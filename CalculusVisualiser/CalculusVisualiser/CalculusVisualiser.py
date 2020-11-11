@@ -8,7 +8,7 @@ mpl.use('TkAgg')
 
 
 
-window = gui.Window(title="Calculus", layout=[[gui.Text("Please select if you want t ovisualise Diffferentiation or Integration")],
+window = gui.Window(title="Calculus", layout=[[gui.Text("Please select if you want to visualise Diffferentiation or Integration")],
 											  [gui.Radio("Differentiation", "selection", key='-SEL-'), gui.Radio("Integration", "selection",)],
 											  [gui.Text("Please Enter Your Equation (example input: 5x^2-3x+6)")],
 											  [gui.Input(key='-EQ-')],
