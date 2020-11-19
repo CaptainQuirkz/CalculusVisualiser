@@ -3,7 +3,6 @@ import matplotlib as mpl
 import PySimpleGUI as gui
 import re
 import math
-import numpy as np
 mpl.use('TkAgg')
 
 
@@ -64,7 +63,7 @@ def Split():
 def Differentiation():
 
 	for i in range(0, len(coefficient)):
-		newcoeff.append(np.float128(coefficient[i]) * np.float128(exponent[i]))
+		newcoeff.append(float(coefficient[i]) * float(exponent[i]))
 		if newcoeff[i] == math.floor(newcoeff[i]):
 			newcoeff[i] = int(newcoeff[i])
 		newexp.append(float(exponent[i]) - 1)
@@ -88,12 +87,15 @@ def FinalAnswer():
 	if Selection == True:
 		answer = ""
 		for i in range(0, len(newexp)):
-			if (newcoeff[i] > 0) and (i > 0):
+		  if (newcoeff[i] > 0) and (i > 0):
 				answer += "+" + str(newcoeff[i]) + "x^" + str(newexp[i])
-			else:
-				answer += str(newcoeff[i]) + "x^" + str(newexp[i])
+      else:
+        if (newexp[i] != 0):
+          answer += str(newcoeff[i]) + "x^" + str(newexp[i])
+        else:
+          answer += str(newcoeff[i])
 		answer = re.sub('\s*\^[10]', "", answer)
-		answer = re.match('^.*(?=.$)', answer)
+		answer = re.match('^.*(?=[+-]\d+(\.\d+)*$)', answer)
 		gui.Popup(answer.group(0))
 	else:
 		answer = 0.0
