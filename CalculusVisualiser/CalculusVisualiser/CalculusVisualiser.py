@@ -64,7 +64,7 @@ def Split():
 def Differentiation():
 
 	for i in range(0, len(coefficient)):
-		newcoeff.append(np.float128(coefficient[i]) * np.float128(exponent[i]))
+		newcoeff.append(float(coefficient[i]) * float(exponent[i]))
 		if newcoeff[i] == math.floor(newcoeff[i]):
 			newcoeff[i] = int(newcoeff[i])
 		newexp.append(float(exponent[i]) - 1)
@@ -95,6 +95,7 @@ def FinalAnswer():
 		answer = re.sub('\s*\^[10]', "", answer)
 		answer = re.match('^.*(?=.$)', answer)
 		gui.Popup(answer.group(0))
+		print (answer.group(0))
 	else:
 		answer = 0.0
 		upper = 0.0
