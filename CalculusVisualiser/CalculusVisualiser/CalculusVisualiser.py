@@ -3,12 +3,11 @@ import matplotlib as mpl
 import PySimpleGUI as gui
 import re
 import math
-import numpy as np
 mpl.use('TkAgg')
 
 
 
-window = gui.Window(title="Calculus", layout=[[gui.Text("Please select if you want t ovisualise Diffferentiation or Integration")],
+window = gui.Window(title="Calculus", layout=[[gui.Text("Please select if you want to visualise Diffferentiation or Integration")],
 											  [gui.Radio("Differentiation", "selection", key='-SEL-'), gui.Radio("Integration", "selection",)],
 											  [gui.Text("Please Enter Your Equation (example input: 5x^2-3x+6)")],
 											  [gui.Input(key='-EQ-')],
@@ -18,7 +17,7 @@ window = gui.Window(title="Calculus", layout=[[gui.Text("Please select if you wa
 											  [gui.Text("###PLACE WORKED SOLUTION HERE###")],
 											  [gui.Text("Final Answer:")],
 											  [gui.Text("###PLACE ANSWER HERE###")],
-											  [gui.Text("###PLACE SOLVED GRAPH HERE###")]], margins=(200,300))
+											  [gui.Text("###PLACE SOLVED GRAPH HERE###")]], margins=(200,200))
 
 event, values = window.read()
 window.close
@@ -41,7 +40,7 @@ UL = 0.0
 LL = 0.0
 
 if Selection == False:
-	window2 = gui.Window(title="Integral Limiters", layout=[[gui.Text("Please enter upper and lower bounds to integrate between")], [gui.Text("Lower Limit:"), gui.Input(key='-LL-'), gui.Text("Upper Limit"), gui.Input(key='-UL-')], [gui.Button("Go")]])
+	window2 = gui.Window(title="Integral Limiters", layout=[[gui.Text("Please enter upper and lower bounds to integrate between")], [gui.Text("Lower Limit:"), gui.Input(key='-LL-', size=(20,20)), gui.Text("Upper Limit"), gui.Input(key='-UL-', size=(20,20))], [gui.Button("Go")]])
 	event, values = window2.read()
 	UL = float(values['-UL-'])
 	LL = float(values['-LL-'])
@@ -91,9 +90,12 @@ def FinalAnswer():
 			if (newcoeff[i] > 0) and (i > 0):
 				answer += "+" + str(newcoeff[i]) + "x^" + str(newexp[i])
 			else:
-				answer += str(newcoeff[i]) + "x^" + str(newexp[i])
+				if (newexp[i] != 0):
+					answer += str(newcoeff[i]) + "x^" + str(newexp[i])
+				else:
+					 answer += str(newcoeff[i])
 		answer = re.sub('\s*\^[10]', "", answer)
-		answer = re.match('^.*(?=.$)', answer)
+		answer = re.match('^.*(?=[+-]\d+(\.\d+)*$)', answer)
 		gui.Popup(answer.group(0))
 		print (answer.group(0))
 	else:
