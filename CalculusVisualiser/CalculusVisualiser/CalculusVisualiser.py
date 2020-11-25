@@ -74,7 +74,7 @@ def Differentiation():
 			newexp.append(float(exponent[i]) - 1)
 			if newexp[i] == math.floor(newexp[i]):
 					newexp[i] = int(newexp[i])
-	gui.Popup(np.round(newcoeff, 8), np.round(newexp,8))
+	gui.Popup(np.round(newcoeff, 8), np.round(newexp, 8))
 
 def Integration():
 	for i in range(0, len(coefficient)):
@@ -93,7 +93,7 @@ def FinalAnswer():
 		answer = ""
 		for i in range(0, len(newexp)):
 			if (newcoeff[i] > 0) and (i > 0):
-				answer += "+" + str(newcoeff[i]) + "x^" + str(newexp[i])
+				answer += "+" + str(np.round(newcoeff[i], 8)) + "x^" + str(newexp[i])
 			else:
 				if (newexp[i] != 0):
 					answer += str(newcoeff[i]) + "x^" + str(newexp[i])
