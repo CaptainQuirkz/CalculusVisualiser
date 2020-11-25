@@ -7,6 +7,7 @@ authors = ["repl.it user <replituser@example.com>"]
 [tool.poetry.dependencies]
 python = "^3.8"
 pysimplegui = "^4.30.0"
+numpy = "^1.19.4"
 
 [tool.poetry.dev-dependencies]
 

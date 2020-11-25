@@ -3,6 +3,7 @@ import matplotlib as mpl
 import PySimpleGUI as gui
 import re
 import math
+import numpy as np
 mpl.use('TkAgg')
 
 
@@ -73,7 +74,7 @@ def Differentiation():
 			newexp.append(float(exponent[i]) - 1)
 			if newexp[i] == math.floor(newexp[i]):
 					newexp[i] = int(newexp[i])
-	gui.Popup(newcoeff, newexp)
+	gui.Popup(np.round(newcoeff, 8), np.round(newexp,8))
 
 def Integration():
 	for i in range(0, len(coefficient)):
