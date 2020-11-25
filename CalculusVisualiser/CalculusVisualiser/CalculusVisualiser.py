@@ -69,6 +69,10 @@ def Differentiation():
 				newexp.append(float(exponent[i]) - 1)
 				if newexp[i] == math.floor(newexp[i]):
 					newexp[i] = int(newexp[i])
+			elif (int(exponent[i]) < 0):
+				newexp.append(float(exponent[i]) - 1)
+				if newexp[i] == math.floor(newexp[i]):
+					newexp[i] = int(newexp[i])
 	gui.Popup(newcoeff, newexp)
 
 def Integration():
