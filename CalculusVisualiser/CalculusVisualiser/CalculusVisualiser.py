@@ -65,13 +65,13 @@ def Differentiation():
 		newcoeff.append(float(coefficient[i]) * float(exponent[i]))
 		if newcoeff[i] == math.floor(newcoeff[i]):
 			newcoeff[i] = int(newcoeff[i])
-			if (int(exponent[i]) > 0):
-				newexp.append(float(exponent[i]) - 1)
-				if newexp[i] == math.floor(newexp[i]):
-					newexp[i] = int(newexp[i])
-			elif (int(exponent[i]) < 0):
-				newexp.append(float(exponent[i]) - 1)
-				if newexp[i] == math.floor(newexp[i]):
+		if (float(exponent[i]) > 0):
+			newexp.append(float(exponent[i]) - 1)
+			if newexp[i] == math.floor(newexp[i]):
+				newexp[i] = int(newexp[i])
+		elif (float(exponent[i]) < 0):
+			newexp.append(float(exponent[i]) - 1)
+			if newexp[i] == math.floor(newexp[i]):
 					newexp[i] = int(newexp[i])
 	gui.Popup(newcoeff, newexp)
 
