@@ -46,19 +46,17 @@ if Selection == False:
 	UL = float(values['-UL-'])
 	LL = float(values['-LL-'])
 def Split():
-    if Selection == False:
-        coeffpattern = '\s*(^|(\+|-))\s*\d+([\.\/]\d+)?\s*((?=x)|$)' #checked and works with fractions
-    else:
-        coeffpattern = '\s*(^|(\+|-))\s*\d+([\.\/]\d+)?\s*((?=x))' #checked and works with fractions
- 
-    coeff = re.finditer(coeffpattern, Equation, re.MULTILINE) #REGEX to find every number before an x but after an exponent
-    exp = re.finditer('\s*(?<=x\^)\s*[\+-]*\s*\d+([\.\/]\d+)?', Equation, re.MULTILINE)  #REGEX to find every exponent after a ^ symbol but before the next coefficient
- 
-    for matchnum, match in enumerate(coeff, start=1):
-        coefficient.append(match.group()) #takes all coefficients from the equation and appends them to the coefficients list
-    for matchnum, match in enumerate(exp, start=1):
-        exponent.append(match.group()) #takes all exponents from the equation and appends them to the exponents list
-    print (coefficient, exponent)
+	if Selection == False:
+		coeffpattern = '\s*(^|(\+|-))\s*\d+([\.\/]\d+)?\s*((?=x)|$)' #checked and works with fractions
+	else:
+		coeffpattern = '\s*(^|(\+|-))\s*\d+([\.\/]\d+)?\s*((?=x))' #checked and works with fractions 
+	coeff = re.finditer(coeffpattern, Equation, re.MULTILINE) #REGEX to find every number before an x but after an exponent
+	exp = re.finditer('\s*(?<=x\^)\s*[\+-]*\s*\d+([\.\/]\d+)?', Equation, re.MULTILINE)  #REGEX to find every exponent after a ^ symbol but before the next coefficient 
+	for matchnum, match in enumerate(coeff, start=1):
+		coefficient.append(match.group()) #takes all coefficients from the equation and appends them to the coefficients list
+	for matchnum, match in enumerate(exp, start=1):
+		exponent.append(match.group()) #takes all exponents from the equation and appends them to the exponents list
+	print (coefficient, exponent)
 
 def Differentiation():
 
@@ -88,7 +86,6 @@ def Integration():
 
 def FinalAnswer():
 
-	
 	if Selection == True:
 		answer = ""
 		for i in range(0, len(newexp)):
@@ -119,8 +116,6 @@ def FinalAnswer():
 			answer = int(answer)
 		print (answer)
 		gui.Popup(answer)
-
-	
 
 Split()
 def fractions(fraction):
