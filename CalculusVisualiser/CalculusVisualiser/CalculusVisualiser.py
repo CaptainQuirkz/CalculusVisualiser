@@ -97,9 +97,9 @@ def FinalAnswer():
 				else:
 					answer += str(newcoeff[i])
 					answer = re.sub('\s*\^[10]', "", answer)
-		#answer = re.match('^.*(?=[+-]\d+(\.\d+)*$)', answer)
 		gui.Popup(answer)
 		print (answer)
+		return answer
 	else:
 		answer = 0.0
 		upper = 0.0
@@ -116,6 +116,7 @@ def FinalAnswer():
 			answer = int(answer)
 		print (answer)
 		gui.Popup(answer)
+		return answer
 
 Split()
 def fractions(fraction):
@@ -139,14 +140,12 @@ if Selection == True:
 	Differentiation()
 elif Selection == False:
 	Integration()
-
-
-
-
-
-
-
 FinalAnswer()
 
-plt.show(block=True)
-plt.interactive(False)
+if (Selection == True):
+	fig = plt.figure(figsize=(14,10))
+	x = np.linspace(-100,100,1000)
+	y = FinalAnswer()
+	plt.plot(x, y)
+	plt.show(block=True)
+	plt.interactive(False)
