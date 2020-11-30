@@ -140,12 +140,17 @@ if Selection == True:
 	Differentiation()
 elif Selection == False:
 	Integration()
-FinalAnswer()
+
+def Formatting():
+	eq = re.sub('(x\s*)+', FinalAnswer(), '*x')
+	eq = re.sub('(\^\s*)+', eq, '**')
+	return eq
+	
 
 if (Selection == True):
 	fig = plt.figure(figsize=(14,10))
 	x = np.linspace(-100,100,1000)
-	y = FinalAnswer()
+	y = eval(Formatting())
 	plt.plot(x, y)
 	plt.show(block=True)
 	plt.interactive(False)
