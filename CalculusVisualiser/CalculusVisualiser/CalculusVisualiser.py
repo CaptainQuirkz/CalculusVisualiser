@@ -141,6 +141,8 @@ if Selection == True:
 elif Selection == False:
 	Integration()
 
+
+eq = ""
 def Formatting():
 	eq = re.sub('(x\s*)+', FinalAnswer(), '*x')
 	eq = re.sub('(\^\s*)+', eq, '**')
