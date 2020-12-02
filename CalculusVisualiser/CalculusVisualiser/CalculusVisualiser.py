@@ -148,7 +148,7 @@ def Formatting():
 	if bool(re.search('(\^\s*)+', eq)) == True:
 		eq = re.sub('(\^\s*)+', eq, '**')
 	eq = re.match('(?!\*).*', eq)
-	return eq
+	return str(eq)
 	
 
 if (Selection == True):
