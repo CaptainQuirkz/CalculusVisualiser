@@ -145,14 +145,16 @@ elif Selection == False:
 eq = ""
 def Formatting():
 	eq = re.sub('(x\s*)+', FinalAnswer(), '*x')
-	eq = re.sub('(\^\s*)+', eq, '**')
+	if bool(re.search('(\^\s*)+', eq)) == True:
+		eq = re.sub('(\^\s*)+', eq, '**')
+	eq = re.match('(?!\*).*', eq)
 	return eq
 	
 
 if (Selection == True):
 	fig = plt.figure(figsize=(14,10))
 	x = np.linspace(-100,100,1000)
-	y = eval(Formatting())
+	y = eval(str(Formatting()))
 	plt.plot(x, y)
 	plt.show(block=True)
 	plt.interactive(False)
