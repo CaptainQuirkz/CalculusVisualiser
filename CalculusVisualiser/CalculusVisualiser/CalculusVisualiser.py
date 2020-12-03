@@ -24,7 +24,7 @@ event, values = window.read()
 window.close
 gui.Popup(values['-SEL-'], values['-EQ-'])
 if values['-EQ-'] == "":
-  values['-EQ-'] = "5/4x^-3+7.39x^5/2-3.34"
+  values['-EQ-'] = "5/3x^3-3/2x^2+6x"
   
 Selection = values['-SEL-']
 Equation = re.sub('\s*((?<=((\+|-)))|^)\s*x', '1x', values['-EQ-']) #REGEX to add 1 to any x with no coefficient
@@ -143,18 +143,21 @@ elif Selection == False:
 
 
 eq = ""
-def Formatting():
-	eq = re.sub('(x\s*)+', FinalAnswer(), '*x')
-	if bool(re.search('(\^\s*)+', eq)) == True:
-		eq = re.sub('(\^\s*)+', eq, '**')
-	eq = re.match('(?!\*).*', eq)
+def Formatting(inp):
+	eq = str(inp).replace("x", "*x")
+	eq = eq.replace("^","**")
+	#eq = re.match('(?!\*).*', eq)
+	print (str(eq))
 	return str(eq)
 	
 
 if (Selection == True):
-	fig = plt.figure(figsize=(14,10))
+	fig = plt.figure()
+	plt.grid(True)
 	x = np.linspace(-100,100,1000)
-	y = eval(str(Formatting()))
-	plt.plot(x, y)
+	y1 = eval(str(Formatting(FinalAnswer())))
+	y2 = eval(str(Formatting(Equation)))
+	plt.plot(x, y1)
+	plt.plot(x, y2)
 	plt.show(block=True)
 	plt.interactive(False)
