@@ -1,2 +1,2 @@
-run = "python CalculusVisualiser/CalculusVisualiser/CalculusVisualiser.py"
-language = "python"
+run = "python3 CalculusVisualiser/CalculusVisualiser/CalculusVisualiser.py"
+language = "python3"
