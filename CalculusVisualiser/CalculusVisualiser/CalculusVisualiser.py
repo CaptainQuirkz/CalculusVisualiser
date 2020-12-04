@@ -4,6 +4,7 @@ import PySimpleGUI as gui
 import re
 import math
 import numpy as np
+from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
 mpl.use('TkAgg')
 
 
@@ -13,7 +14,7 @@ window = gui.Window(title="Calculus", layout=[[gui.Text("Please select if you wa
 											  [gui.Text("Please Enter Your Equation (example input: 5x^2-3x+6)")],
 											  [gui.Input(key='-EQ-')],
 											  [gui.Button("Go")],
-											  [gui.Text("###PLACE GRAPH HERE###")],
+											  [gui.Canvas(key='-CANVAS-')],
 											  [gui.Text("Worked Solution:")],
 											  [gui.Text("###PLACE WORKED SOLUTION HERE###")],
 											  [gui.Text("Final Answer:")],
@@ -146,13 +147,12 @@ eq = ""
 def Formatting(inp):
 	eq = str(inp).replace("x", "*x")
 	eq = eq.replace("^","**")
-	#eq = re.match('(?!\*).*', eq)
 	print (str(eq))
 	return str(eq)
 	
 
 if (Selection == True):
-	fig = plt.figure()
+	fig = plt.figure(frameon=False)
 	plt.grid(True)
 	x = np.linspace(-100,100,1000)
 	y1 = eval(str(Formatting(FinalAnswer())))
@@ -161,3 +161,15 @@ if (Selection == True):
 	plt.plot(x, y2)
 	plt.show(block=True)
 	plt.interactive(False)
+	fig = mpl.figure.Figure(figsize=(5, 4), dpi=100)
+	t = np.arrange(0, 3, 0.01)
+	fig.add_subplot(111).plot(t, 2 * np.sin(2 * np.pi * t))
+
+def embedgraph(canvas, figure):
+	fig_canv_agg = FigureFigureCanvasTkAgg(figure, canvas)
+	fig_canv_agg.draw()
+	fig_canv_agg.get_tk_widget().pack(side='top', fill='both', expand=1)
+	return fig_canv_agg
+
+fig_canv_agg = embedgraph(window['-CANVAS-'].TKCanvas, fig)
+
