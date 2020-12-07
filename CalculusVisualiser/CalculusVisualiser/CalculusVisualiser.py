@@ -23,7 +23,7 @@ window = gui.Window(title="Calculus", layout=[[gui.Text("Please select if you wa
 
 event, values = window.read()
 window.close
-gui.Popup(values['-SEL-'], values['-EQ-'])
+#gui.Popup(values['-SEL-'], values['-EQ-'])
 if values['-EQ-'] == "":
   values['-EQ-'] = "5/3x^3-3/2x^2+6x"
   
@@ -32,7 +32,7 @@ Equation = re.sub('\s*((?<=((\+|-)))|^)\s*x', '1x', values['-EQ-']) #REGEX to ad
 Equation = re.sub('\s*x(?!\^)', 'x^1', Equation) #REGEX to add x^1 to any x with no exponent
 if bool(re.match('\d$', Equation)) == False:
 	Equation = Equation + "x^0"
-gui.Popup(Equation)
+#gui.Popup(Equation)
  
 coefficient = [] #creates empty list to add the coefficients to
 exponent = []    #creates empty list to add the exponents to
@@ -73,7 +73,7 @@ def Differentiation():
 			newexp.append(float(exponent[i]) - 1)
 			if newexp[i] == math.floor(newexp[i]):
 					newexp[i] = int(newexp[i])
-	gui.Popup(np.round(newcoeff, 8), np.round(newexp, 8))
+	#gui.Popup(np.round(newcoeff, 8), np.round(newexp, 8))
 
 def Integration():
 	for i in range(0, len(coefficient)):
@@ -83,7 +83,7 @@ def Integration():
 		newexp.append(float(exponent[i]) + 1)
 		if newexp[i] == math.floor(newexp[i]):
 			newexp[i] = int(newexp[i])
-	gui.Popup(newcoeff, newexp)
+	#gui.Popup(newcoeff, newexp)
 
 def FinalAnswer():
 
@@ -98,7 +98,7 @@ def FinalAnswer():
 				else:
 					answer += str(newcoeff[i])
 					answer = re.sub('\s*\^[10]', "", answer)
-		gui.Popup(answer)
+		#gui.Popup(answer)
 		print (answer)
 		return answer
 	else:
@@ -116,7 +116,7 @@ def FinalAnswer():
 		if float(answer) == math.floor(answer):
 			answer = int(answer)
 		print (answer)
-		gui.Popup(answer)
+		#gui.Popup(answer)
 		return answer
 
 Split()
@@ -136,7 +136,7 @@ else:
 			if "/" in exponent[i]:
 				exponent[i] = fractions(exponent[i])
 
-gui.popup(coefficient, exponent)
+#gui.popup(coefficient, exponent)
 if Selection == True:
 	Differentiation()
 elif Selection == False:
@@ -159,17 +159,34 @@ if (Selection == True):
 	y2 = eval(str(Formatting(Equation)))
 	plt.plot(x, y1)
 	plt.plot(x, y2)
-	plt.show(block=True)
+	#plt.show(block=True)
 	plt.interactive(False)
-	fig = mpl.figure.Figure(figsize=(5, 4), dpi=100)
-	t = np.arrange(0, 3, 0.01)
-	fig.add_subplot(111).plot(t, 2 * np.sin(2 * np.pi * t))
+	#fig = mpl.figure.Figure(figsize=(5, 4), dpi=100)
+	#t = np.arange(0, 3, .01)
+	#fig.add_subplot(111).plot(t, 2 * np.sin(2 * np.pi * t))
+
 
 def embedgraph(canvas, figure):
-	fig_canv_agg = FigureFigureCanvasTkAgg(figure, canvas)
+	fig_canv_agg = FigureCanvasTkAgg(figure, canvas)
 	fig_canv_agg.draw()
 	fig_canv_agg.get_tk_widget().pack(side='top', fill='both', expand=1)
 	return fig_canv_agg
 
+
+
+
+window.Close
+window = gui.Window(title="Calculus", layout=[[gui.Text("Please select if you want to visualise Diffferentiation or Integration")],
+											  [gui.Radio("Differentiation", "selection", key='-SEL-'), gui.Radio("Integration", "selection",)],
+											  [gui.Text("Please Enter Your Equation (example input: 5x^2-3x+6)")],
+											  [gui.Input(key='-EQ-')],
+											  [gui.Button("Go")],
+											  [gui.Canvas(key='-CANVAS-')],
+											  [gui.Text("Worked Solution:")],
+											  [gui.Text("###PLACE WORKED SOLUTION HERE###")],
+											  [gui.Text("Final Answer:")],
+											  [gui.Text("###PLACE ANSWER HERE###")],
+											  [gui.Text("###PLACE SOLVED GRAPH HERE###")]], margins=(200,200), finalize=True)
 fig_canv_agg = embedgraph(window['-CANVAS-'].TKCanvas, fig)
+
 
