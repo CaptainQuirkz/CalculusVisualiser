@@ -14,6 +14,7 @@ window = gui.Window(title="Calculus", layout=[[gui.Text("Please select if you wa
 											  [gui.Text("Please Enter Your Equation (example input: 5x^2-3x+6)")],
 											  [gui.Input(key='-EQ-')],
 											  [gui.Button("Go")],
+												[gui.Canvas(key='-CANVAS-')],
 											  [gui.Text("Worked Solution:")],
 											  [gui.Text("###PLACE WORKED SOLUTION HERE###")],
 											  [gui.Text("Final Answer:")],
@@ -24,7 +25,7 @@ event, values = window.read()
 window.close
 #gui.Popup(values['-SEL-'], values['-EQ-'])
 if values['-EQ-'] == "":
-  values['-EQ-'] = "5/3x^3-3/2x^2+6x"
+  values['-EQ-'] = "5x^2-3x+6"
   
 Selection = values['-SEL-']
 Equation = re.sub('\s*((?<=((\+|-)))|^)\s*x', '1x', values['-EQ-']) #REGEX to add 1 to any x with no coefficient
@@ -172,34 +173,12 @@ def embedgraph(canvas, figure):
 	return fig_canv_agg
 
 
-window.close()
-if Selection == True:
-	window = gui.Window(title="Calculus", layout=[[gui.Text("Please select if you want to visualise Diffferentiation or Integration")],
-												  [gui.Radio("Differentiation", "selection", key='-SEL-', default=True), gui.Radio("Integration", "selection",)],
-												  [gui.Text("Please Enter Your Equation (example input: 5x^2-3x+6)")],
-												  [gui.Input(values['-EQ-'], key='-EQ-')],
-												  [gui.Button("Go")],
-												  [gui.Canvas(key='-CANVAS-')],
-												  [gui.Text("Worked Solution:")],
-												  [gui.Text("###PLACE WORKED SOLUTION HERE###")],
-												  [gui.Text("Final Answer:")],
-												  [gui.Text("###PLACE ANSWER HERE###")],
-												  [gui.Text("###PLACE SOLVED GRAPH HERE###")]], element_justification='center')
-else:
-	window = gui.Window(title="Calculus", layout=[[gui.Text("Please select if you want to visualise Diffferentiation or Integration")],
-												  [gui.Radio("Differentiation", "selection", key='-SEL-'), gui.Radio("Integration", "selection", default=True)],
-											   	  [gui.Text("Please Enter Your Equation (example input: 5x^2-3x+6)")],
-												  [gui.InputText(values['-EQ-'], key='-EQ-')],
-												  [gui.Button("Go")],
-												  [gui.Canvas(key='-CANVAS-')],
-												  [gui.Text("Worked Solution:")],
-												  [gui.Text("###PLACE WORKED SOLUTION HERE###")],
-												  [gui.Text("Final Answer:")],
-												  [gui.Text("###PLACE ANSWER HERE###")],
-												  [gui.Text("###PLACE SOLVED GRAPH HERE###")]], element_justification='center')
-window.Finalize()
 
 fig_canv_agg = embedgraph(window['-CANVAS-'].TKCanvas, fig)
+
+event, values = window.read()
+
+
 
 
 
