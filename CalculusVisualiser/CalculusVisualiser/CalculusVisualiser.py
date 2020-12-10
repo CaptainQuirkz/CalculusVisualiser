@@ -153,7 +153,7 @@ def Formatting(inp):
 if (Selection == True):
 	fig = plt.figure()
 	plt.grid(True)
-	x = np.linspace(-100,100,1000)
+	x = np.linspace(-100,100,100)
 	y1 = eval(str(Formatting(FinalAnswer())))
 	y2 = eval(str(Formatting(Equation)))
 	plt.plot(x, y1)
@@ -161,9 +161,11 @@ if (Selection == True):
 else:
 	fig = plt.figure()
 	plt.grid(True)
-	x = np.linspace(-100, 100, 1000)
+	x = np.linspace(-100, 100, 100)
 	y = eval(str(Formatting(Equation)))
-	plt.plot(x, y)
+	plt.plot(x,y)
+	xbounds = np.linspace(LL, UL, 100)
+	plt.fill_between(xbounds, y)
 
 
 def embedgraph(canvas, figure):
