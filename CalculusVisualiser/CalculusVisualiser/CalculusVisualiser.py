@@ -14,12 +14,11 @@ window = gui.Window(title="Calculus", layout=[[gui.Text("Please select if you wa
 											  [gui.Text("Please Enter Your Equation (example input: 5x^2-3x+6)")],
 											  [gui.Input(key='-EQ-')],
 											  [gui.Button("Go")],
-												[gui.Canvas(key='-CANVAS-')],
-											  [gui.Text("Worked Solution:")],
-											  [gui.Text("###PLACE WORKED SOLUTION HERE###")],
-											  [gui.Text("Final Answer:")],
-											  [gui.Text("###PLACE ANSWER HERE###")],
-											  [gui.Text("###PLACE SOLVED GRAPH HERE###")]], element_justification='center')
+											  [gui.Canvas(key='-CANVAS-')],
+											  [gui.Text("                                                  ",key='-ANSLAB-', enable_events=False)],
+											  [gui.Text("                                                  ",key='-ANSFIN-', enable_events=False)],
+											  [gui.Text("                                                  ",key='-WKDLAB-', enable_events=False)],
+											  [gui.Text("                                                  ",key='-WKDANS-', enable_events=False)]], element_justification='center')
 
 event, values = window.read()
 window.close
@@ -152,18 +151,19 @@ def Formatting(inp):
 	
 
 if (Selection == True):
-	fig = plt.figure(frameon=False)
+	fig = plt.figure()
 	plt.grid(True)
 	x = np.linspace(-100,100,1000)
 	y1 = eval(str(Formatting(FinalAnswer())))
 	y2 = eval(str(Formatting(Equation)))
 	plt.plot(x, y1)
 	plt.plot(x, y2)
-	#plt.show(block=True)
-	plt.interactive(False)
-	#fig = mpl.figure.Figure(figsize=(5, 4), dpi=100)
-	#t = np.arange(0, 3, .01)
-	#fig.add_subplot(111).plot(t, 2 * np.sin(2 * np.pi * t))
+else:
+	fig = plt.figure()
+	plt.grid(True)
+	x = np.linspace(-100, 100, 1000)
+	y = eval(str(Formatting(Equation)))
+	plt.plot(x, y)
 
 
 def embedgraph(canvas, figure):
@@ -175,8 +175,15 @@ def embedgraph(canvas, figure):
 
 
 fig_canv_agg = embedgraph(window['-CANVAS-'].TKCanvas, fig)
+window['-ANSLAB-'].Update("Final Answer:")
+window['-ANSFIN-'].Update(FinalAnswer())
+window['-WKDLAB-'].Update("Worked Answer:")
 
 event, values = window.read()
+
+
+
+
 
 
 
