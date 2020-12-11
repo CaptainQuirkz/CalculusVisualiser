@@ -40,13 +40,13 @@ newexp = []
 UL = 0.0
 LL = 0.0
 
-if Selection == False:
+if Selection == False: # Differentiation
 	window2 = gui.Window(title="Integral Limiters", layout=[[gui.Text("Please enter upper and lower bounds to integrate between")], [gui.Text("Lower Limit:"), gui.Input(key='-LL-', size=(20,20)), gui.Text("Upper Limit"), gui.Input(key='-UL-', size=(20,20))], [gui.Button("Go")]])
 	event, values = window2.read()
 	UL = float(values['-UL-'])
-	LL = float(values['-LL-'])
+	LL = float(values['-LL-']) # displays a window asking for an upper and lower bound for definite integration
 def Split():
-	if Selection == False:
+	if Selection == False: # Integration
 		coeffpattern = '\s*(^|(\+|-))\s*\d+([\.\/]\d+)?\s*((?=x)|$)' #checked and works with fractions
 	else:
 		coeffpattern = '\s*(^|(\+|-))\s*\d+([\.\/]\d+)?\s*((?=x))' #checked and works with fractions 
@@ -61,44 +61,40 @@ def Split():
 def Differentiation():
 
 	for i in range(0, len(coefficient)):
-		newcoeff.append(float(coefficient[i]) * float(exponent[i]))
+		newcoeff.append(float(coefficient[i]) * float(exponent[i])) # multiplies the coefficient by its corrosponding exponent to get the new coefficient
 		if newcoeff[i] == math.floor(newcoeff[i]):
-			newcoeff[i] = int(newcoeff[i])
-		if (float(exponent[i]) > 0):
-			newexp.append(float(exponent[i]) - 1)
+			newcoeff[i] = int(newcoeff[i]) # checks if the coefficient could be better represented by an integer and converts if it can
+		if (float(exponent[i]) > 0):  # makes sure the expoent is not 0
+			newexp.append(float(exponent[i]) - 1) # adds one to the exponent and sets it to the new exponent
 			if newexp[i] == math.floor(newexp[i]):
-				newexp[i] = int(newexp[i])
-		elif (float(exponent[i]) < 0):
-			newexp.append(float(exponent[i]) - 1)
+				newexp[i] = int(newexp[i]) # checks if the exponent could be better represented by an integer and converts if it can
+		elif (float(exponent[i]) < 0): # makes sure the expoent is not 0
+			newexp.append(float(exponent[i]) - 1) # adds one to the exponent and sets it to the new exponent
 			if newexp[i] == math.floor(newexp[i]):
-					newexp[i] = int(newexp[i])
-	#gui.Popup(np.round(newcoeff, 8), np.round(newexp, 8))
+					newexp[i] = int(newexp[i]) # checks if the exponent could be better represented by an integer and converts if it can
 
 def Integration():
 	for i in range(0, len(coefficient)):
-		newcoeff.append(float(coefficient[i]) / (float(exponent[i]) + 1))
+		newcoeff.append(float(coefficient[i]) / (float(exponent[i]) + 1)) # increses exponent and divides the coefficient by the new exponent
 		if newcoeff[i] == math.floor(newcoeff[i]):
-			newcoeff[i] = int(newcoeff[i])
-		newexp.append(float(exponent[i]) + 1)
+			newcoeff[i] = int(newcoeff[i]) # checks if the coefficient could be better represented by an integer and converts if it can
+		newexp.append(float(exponent[i]) + 1) # increses the exponent by one
 		if newexp[i] == math.floor(newexp[i]):
-			newexp[i] = int(newexp[i])
-	#gui.Popup(newcoeff, newexp)
+			newexp[i] = int(newexp[i]) # checks if the exponent could be better represented by an integer and converts if it can
 
 def FinalAnswer():
 
-	if Selection == True:
+	if Selection == True: # Differentiation
 		answer = ""
 		for i in range(0, len(newexp)):
 			if (newcoeff[i] > 0) and (i > 0):
-				answer += "+" + str(np.round(newcoeff[i], 8)) + "x^" + str(newexp[i])
+				answer += "+" + str(np.round(newcoeff[i], 8)) + "x^" + str(newexp[i]) # formats the answer for differentiation so it displays in the same format as the input
 			else:
 				if (newexp[i] != 0):
 					answer += str(newcoeff[i]) + "x^" + str(newexp[i])
 				else:
 					answer += str(newcoeff[i])
 					answer = re.sub('\s*\^[10]', "", answer)
-		#gui.Popup(answer)
-		print (answer)
 		return answer
 	else:
 		answer = 0.0
@@ -106,39 +102,37 @@ def FinalAnswer():
 		lower = 0.0
 		for i in range(0, len(newexp)):
 			if newexp[i] != 1:
-				upper += newcoeff[i] * (UL ** newexp[i])
-				lower += newcoeff[i] * (LL ** newexp[i])
+				upper += newcoeff[i] * (UL ** newexp[i]) # calculates the upper limit for the equation
+				lower += newcoeff[i] * (LL ** newexp[i]) # calculates the lower limit for the equation
 			else:
-				upper += newcoeff[i] * UL
+				upper += newcoeff[i] * UL # just multiplies the coefficient by the limit if the exponent is 1
 				lower += newcoeff[i] * LL
-		answer = upper - lower
+		answer = upper - lower # calculates the final answer by taking the lower from the upper
 		if float(answer) == math.floor(answer):
-			answer = int(answer)
-		print (answer)
-		#gui.Popup(answer)
+			answer = int(answer) # checks if the answer is better represented as an integer and converts if it can
 		return answer
 
 Split()
 def fractions(fraction):
 	parts = fraction.split("/")
-	return float(parts[0]) / float(parts[1])
-if Selection == False:
-	for i in range(0, len(coefficient) - 1):
+	return float(parts[0]) / float(parts[1]) # handles any division within the calculation
+
+if Selection == False: # Integration
+	for i in range(0, len(coefficient) - 1): # Detects if there is a fraction anywhere
 		if "/" in coefficient[i]:
 			coefficient[i] = fractions(coefficient[i])
 		if "/" in exponent[i]:
 			exponent[i] = fractions(exponent[i])
-else:
-		for i in range(0, len(coefficient)):
+else: # Differentiation
+		for i in range(0, len(coefficient)): # Detects if there is a fraction anywhere but this time without minusing 1
 			if "/" in coefficient[i]:
 				coefficient[i] = fractions(coefficient[i])
 			if "/" in exponent[i]:
 				exponent[i] = fractions(exponent[i])
 
-#gui.popup(coefficient, exponent)
-if Selection == True:
+if Selection == True: # Calls Differentiation() if Differentiation was selected
 	Differentiation()
-elif Selection == False:
+elif Selection == False: # Calls Integration() if Integration was selected
 	Integration()
 
 
