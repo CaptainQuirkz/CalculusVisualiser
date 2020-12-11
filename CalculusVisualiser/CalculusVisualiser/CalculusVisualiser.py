@@ -161,13 +161,16 @@ if (Selection == True):
 else:
 	fig = plt.figure()
 	plt.grid(True)
-	x = np.linspace(LL - 10, UL + 10, 100)
+	x = np.linspace(LL - 20, UL + 20, 100)
 	y = eval(str(Formatting(Equation)))
 	plt.plot(x,y)
 	xbounds = np.linspace(LL, UL, 100)
-	plt.fill_between(xbounds, y)
+	XU = np.ma.masked_greater(x, UL)
+	XL = np.ma.masked_less(XU, LL)
+	plt.fill_between(XL, y)
 	plt.xlim(LL - 10, UL + 10)
 	plt.ylim()
+
 
 
 def embedgraph(canvas, figure):
@@ -184,12 +187,3 @@ window['-ANSFIN-'].Update(FinalAnswer())
 window['-WKDLAB-'].Update("Worked Answer:")
 
 event, values = window.read()
-
-
-
-
-
-
-
-
-
