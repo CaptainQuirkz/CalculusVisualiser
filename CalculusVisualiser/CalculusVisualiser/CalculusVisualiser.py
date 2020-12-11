@@ -4,8 +4,10 @@ import PySimpleGUI as gui
 import re
 import math
 import numpy as np
+import sympy as simp
 from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
 mpl.use('TkAgg')
+#mpl.rcParams['text.usetex'] = True
 
 
 
@@ -18,11 +20,10 @@ window = gui.Window(title="Calculus", layout=[[gui.Text("Please select if you wa
 											  [gui.Text("                                                  ",key='-ANSLAB-', enable_events=False)],
 											  [gui.Text("                                                  ",key='-ANSFIN-', enable_events=False)],
 											  [gui.Text("                                                  ",key='-WKDLAB-', enable_events=False)],
-											  [gui.Text("                                                  ",key='-WKDANS-', enable_events=False)]], element_justification='center')
+											  [gui.Button("Click to view", key='-WKDBTN-', visible=False)]], element_justification='center')
 
 event, values = window.read()
 window.close
-#gui.Popup(values['-SEL-'], values['-EQ-'])
 if values['-EQ-'] == "":
   values['-EQ-'] = "5x^2-3x+6"
   
@@ -31,8 +32,7 @@ Equation = re.sub('\s*((?<=((\+|-)))|^)\s*x', '1x', values['-EQ-']) #REGEX to ad
 Equation = re.sub('\s*x(?!\^)', 'x^1', Equation) #REGEX to add x^1 to any x with no exponent
 if bool(re.match('\d$', Equation)) == False:
 	Equation = Equation + "x^0"
-#gui.Popup(Equation)
- 
+#gui.Popup(Equation) 
 coefficient = [] #creates empty list to add the coefficients to
 exponent = []    #creates empty list to add the exponents to
 newcoeff = []
@@ -179,5 +179,16 @@ fig_canv_agg = embedgraph(window['-CANVAS-'].TKCanvas, fig)
 window['-ANSLAB-'].Update("Final Answer:")
 window['-ANSFIN-'].Update(FinalAnswer())
 window['-WKDLAB-'].Update("Worked Answer:")
+window['-WKDBTN-'].Update(visible=True)
 
+event, values = window.read()
+
+
+if event == '-WKDBTN-':
+
+	layout = [[]]
+	window3 = gui.Window(title="Worked Answer")
+	window3.Finalize
+else:
+	event, values = window.read()
 event, values = window.read()
