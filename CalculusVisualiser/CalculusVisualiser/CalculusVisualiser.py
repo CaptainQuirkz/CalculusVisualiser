@@ -4,7 +4,9 @@ import PySimpleGUI as gui
 import re
 import math
 import numpy as np
-import sympy as simp
+import markdown
+try: import mdx_mathjax
+except: pass
 from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
 mpl.use('TkAgg')
 #mpl.rcParams['text.usetex'] = True
@@ -189,6 +191,8 @@ if event == '-WKDBTN-':
 	layout = [[]]
 	window3 = gui.Window(title="Worked Answer")
 	window3.Finalize
+	mdProcessor = markdown.Markdown(extensions=['mathjax'])
+	equation = mdProcessor.convert(r"int_2^4(5x^2-3x+6)dx")
 else:
 	event, values = window.read()
 event, values = window.read()
