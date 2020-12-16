@@ -146,7 +146,7 @@ def Formatting(inp):
 	return str(eq)
 	
 
-if (Selection == True):
+if (Selection == True): # Differentiation
 	fig = plt.figure()
 	plt.grid(True)
 	x = np.linspace(-100,100,100)
@@ -154,7 +154,7 @@ if (Selection == True):
 	y2 = eval(str(Formatting(Equation)))
 	plt.plot(x, y1)
 	plt.plot(x, y2)
-else:
+else: # Integration
 	fig = plt.figure()
 	plt.grid(True)
 	x = np.linspace(LL - 20, UL + 20, 100)
@@ -188,9 +188,7 @@ event, values = window.read()
 
 if event == '-WKDBTN-':
 
-	
-	
-	if Selection == False: # differentiation
+	if Selection == True: # differentiation
 		layout = [[gui.Text("Differentiation")],
 				  [gui.Text("Differentiating "), gui.Text(Equation)],
 				  [gui.Text("Pair exponents and coefficients together")],
@@ -202,6 +200,7 @@ if event == '-WKDBTN-':
 				  [gui.Text("New exponents: "), gui.Text(str(newexp))],
 				  [gui.Text("Recombine the new coefficients and exponents into one equation:")],
 				  [gui.Text(FinalAnswer())]]
+		window3 = gui.Window(title="Worked Answer", layout=layout)
 	else: # integration
 		layout = [[gui.Text("Integration")],
 				  [gui.Text("Integrating "), gui.Text(Equation), gui.Text("between"), gui.Text(str(LL)), gui.Text(" and "), gui.Text(str(UL))],
@@ -216,12 +215,13 @@ if event == '-WKDBTN-':
 				  [gui.Text("Substitute your upper and lower bounds for x")],
 				  [gui.Text("Take your equation for the lower bound and take it away from the equation for the upper bound")]
 				  [gui.Text("Area under the curve "), gui.Text(Equation), gui.Text("between"), gui.Text(str(LL)), gui.Text(" and "), gui.Text(str(UL)), gui.Text(" is "), gui.Text(FinalAnswer())]]
+		window3 = gui.Window(title="Worked Answer", layout=layout)
 
-
-	window3 = gui.Window(title="Worked Answer", layout=layout)
+	
 	window3.Finalize
 	#mdProcessor = markdown.Markdown(extensions=['mathjax'])
 	#equation = mdProcessor.convert(r"int_2^4(5x^2-3x+6)dx")
 else:
 	event, values = window.read()
 event, values = window.read()
+
