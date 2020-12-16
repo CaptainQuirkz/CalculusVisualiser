@@ -4,9 +4,9 @@ import PySimpleGUI as gui
 import re
 import math
 import numpy as np
-import markdown
-try: import mdx_mathjax
-except: pass
+#import markdown
+#try: import mdx_mathjax
+#except: pass
 from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
 mpl.use('TkAgg')
 #mpl.rcParams['text.usetex'] = True
@@ -188,11 +188,40 @@ event, values = window.read()
 
 if event == '-WKDBTN-':
 
-	layout = [[]]
-	window3 = gui.Window(title="Worked Answer")
+	
+	
+	if Selection == False: # differentiation
+		layout = [[gui.Text("Differentiation")],
+				  [gui.Text("Differentiating "), gui.Text(Equation)],
+				  [gui.Text("Pair exponents and coefficients together")],
+				  [gui.Text("Coefficients: "), gui.Text(str(coefficient))],
+				  [gui.Text("Exponents: "), gui.Text(str(exponent))],
+				  [gui.Text("Multiply together the pairs of exponents and coefficients to make the new coefficients.")],
+				  [gui.Text("New coefficients: "), gui.Text(str(newcoeff))],
+				  [gui.Text("decrease each of your exponents by one")],
+				  [gui.Text("New exponents: "), gui.Text(str(newexp))],
+				  [gui.Text("Recombine the new coefficients and exponents into one equation:")],
+				  [gui.Text(FinalAnswer())]]
+	else: # integration
+		layout = [[gui.Text("Integration")],
+				  [gui.Text("Integrating "), gui.Text(Equation), gui.Text("between"), gui.Text(str(LL)), gui.Text(" and "), gui.Text(str(UL))],
+				  [gui.Text("Pair exponents and coefficients together")],
+				  [gui.Text("Coefficients: "), gui.Text(str(coefficient))],
+				  [gui.Text("Exponents: "), gui.Text(exponent)],
+				  [gui.Text("Increase exponents by one")],
+				  [gui.Text("New exponents: "), gui.Text(newexp)],
+				  [gui.Text("Divide coefficients by the new exponents")],
+				  [gui.Text("New coefficients: "), gui.Text(newcoeff)],
+				  [gui.Text("Recombine the new coefficients and exponents into one equation")],
+				  [gui.Text("Substitute your upper and lower bounds for x")],
+				  [gui.Text("Take your equation for the lower bound and take it away from the equation for the upper bound")]
+				  [gui.Text("Area under the curve "), gui.Text(Equation), gui.Text("between"), gui.Text(str(LL)), gui.Text(" and "), gui.Text(str(UL)), gui.Text(" is "), gui.Text(FinalAnswer())]]
+
+
+	window3 = gui.Window(title="Worked Answer", layout=layout)
 	window3.Finalize
-	mdProcessor = markdown.Markdown(extensions=['mathjax'])
-	equation = mdProcessor.convert(r"int_2^4(5x^2-3x+6)dx")
+	#mdProcessor = markdown.Markdown(extensions=['mathjax'])
+	#equation = mdProcessor.convert(r"int_2^4(5x^2-3x+6)dx")
 else:
 	event, values = window.read()
 event, values = window.read()
