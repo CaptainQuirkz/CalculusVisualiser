@@ -4,13 +4,8 @@ import PySimpleGUI as gui
 import re
 import math
 import numpy as np
-#import markdown
-#try: import mdx_mathjax
-#except: pass
 from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
 mpl.use('TkAgg')
-#mpl.rcParams['text.usetex'] = True
-
 
 
 window = gui.Window(title="Calculus", layout=[[gui.Text("Please select if you want to visualise Diffferentiation or Integration")],
@@ -26,13 +21,14 @@ window = gui.Window(title="Calculus", layout=[[gui.Text("Please select if you wa
 
 event, values = window.read()
 window.close
-  
+if values['-EQ-'] == "":
+  gui.Popup("No Equation entered, please enter an equation")
+EQ = values['-EQ-']
 Selection = values['-SEL-']
 Equation = re.sub('\s*((?<=((\+|-)))|^)\s*x', '1x', values['-EQ-']) #REGEX to add 1 to any x with no coefficient
 Equation = re.sub('\s*x(?!\^)', 'x^1', Equation) #REGEX to add x^1 to any x with no exponent
 if bool(re.match('\d$', Equation)) == False:
 	Equation = Equation + "x^0"
-#gui.Popup(Equation) 
 coefficient = [] #creates empty list to add the coefficients to
 exponent = []    #creates empty list to add the exponents to
 newcoeff = []
@@ -187,19 +183,19 @@ if event == '-WKDBTN-':
 
 	if Selection == True: # differentiation
 		window3 = gui.Window(title="Worked Answer", layout=[[gui.Text("Differentiation")],
-															[gui.Text("Differentiating " + Equation)],
+															[gui.Text("Differentiating " + EQ)],
 															[gui.Text("Pair exponents and coefficients together")],
 															[gui.Text("Coefficients: " + str(coefficient))],
 															[gui.Text("Exponents: " + str(exponent))],
 															[gui.Text("Multiply together the pairs of exponents and coefficients to make the new coefficients.")],
 															[gui.Text("New coefficients: " + str(newcoeff)), gui.Text(str(newcoeff))],
-															[gui.Text("Decrease each of your exponents by one")],
+															[gui.Text("ecrease each of your exponents by one")],
 															[gui.Text("New exponents: " + str(newexp))],
 															[gui.Text("Recombine the new coefficients and exponents into one equation:")],
 															[gui.Text(FinalAnswer())]])
 	else: # integration
 		window3 = gui.Window(title="Worked Answer", layout=[[gui.Text("Integration")],
-															[gui.Text("Integrating " + Equation + " between " + str(LL) + " and " + str(UL))],
+															[gui.Text("Integrating " + EQ + " between " + str(LL) + " and " + str(UL))],
 															[gui.Text("Pair exponents and coefficients together")],
 															[gui.Text("Coefficients: " + str(coefficient))],
 															[gui.Text("Exponents: " + str(exponent))],
@@ -210,7 +206,7 @@ if event == '-WKDBTN-':
 															[gui.Text("Recombine the new coefficients and exponents into one equation")],
 															[gui.Text("Substitute your upper and lower bounds for x")],
 															[gui.Text("Take your equation for the lower bound and take it away from the equation for the upper bound")],
-															[gui.Text("Area under the curve " + str(Equation) + " between " + str(LL) + " and " + str(UL) + " is " + str(FinalAnswer()))]])
+															[gui.Text("Area under the curve " + str(EQ) + " between " + str(LL) + " and " + str(UL) + " is " + str(FinalAnswer()))]])
 	window3.Finalize
 	event, values = window3.read()
 else:
