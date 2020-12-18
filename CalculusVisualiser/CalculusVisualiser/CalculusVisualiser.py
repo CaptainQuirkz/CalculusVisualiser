@@ -26,8 +26,6 @@ window = gui.Window(title="Calculus", layout=[[gui.Text("Please select if you wa
 
 event, values = window.read()
 window.close
-if values['-EQ-'] == "":
-  values['-EQ-'] = "5x^2-3x+6"
   
 Selection = values['-SEL-']
 Equation = re.sub('\s*((?<=((\+|-)))|^)\s*x', '1x', values['-EQ-']) #REGEX to add 1 to any x with no coefficient
@@ -140,36 +138,35 @@ elif Selection == False: # Calls Integration() if Integration was selected
 
 eq = ""
 def Formatting(inp):
-	eq = str(inp).replace("x", "*x")
+	eq = str(inp).replace("x", "*x") # formats the equation so when you use eval() in it, it will be able to be graphed
 	eq = eq.replace("^","**")
-	print (str(eq))
 	return str(eq)
 	
 
 if (Selection == True): # Differentiation
 	fig = plt.figure()
 	plt.grid(True)
-	x = np.linspace(-100,100,100)
-	y1 = eval(str(Formatting(FinalAnswer())))
-	y2 = eval(str(Formatting(Equation)))
-	plt.plot(x, y1)
+	x = np.linspace(-100,100,100) # creates x values to plot
+	y1 = eval(str(Formatting(FinalAnswer()))) # the differentiated graph
+	y2 = eval(str(Formatting(Equation))) # the original graph
+	plt.plot(x, y1) # drawing the data to the graph
 	plt.plot(x, y2)
 else: # Integration
 	fig = plt.figure()
 	plt.grid(True)
-	x = np.linspace(LL - 20, UL + 20, 100)
-	y = eval(str(Formatting(Equation)))
-	plt.plot(x,y)
-	xbounds = np.linspace(LL, UL, 100)
-	XU = np.ma.masked_greater(x, UL)
+	x = np.linspace(LL - 20, UL + 20, 100) # creating dynamic x values based on the entered limits
+	y = eval(str(Formatting(Equation))) # the original graph
+	plt.plot(x,y) # draws the data to the graph
+	xbounds = np.linspace(LL, UL, 100) # the region to highlight
+	XU = np.ma.masked_greater(x, UL) # masks the data so it fits to the original graph
 	XL = np.ma.masked_less(XU, LL)
-	plt.fill_between(XL, y)
+	plt.fill_between(XL, y) # highlights between the curve and y=0 between the limits entered
 	plt.xlim(LL - 10, UL + 10)
 	plt.ylim()
 
 
 
-def embedgraph(canvas, figure):
+def embedgraph(canvas, figure): # takes the graph stored in fig and draws it to the canvas in the GUI.
 	fig_canv_agg = FigureCanvasTkAgg(figure, canvas)
 	fig_canv_agg.draw()
 	fig_canv_agg.get_tk_widget().pack(side='top', fill='both', expand=1)
@@ -177,11 +174,11 @@ def embedgraph(canvas, figure):
 
 
 
-fig_canv_agg = embedgraph(window['-CANVAS-'].TKCanvas, fig)
+fig_canv_agg = embedgraph(window['-CANVAS-'].TKCanvas, fig) # adds the graph to the existing window
 window['-ANSLAB-'].Update("Final Answer:")
-window['-ANSFIN-'].Update(FinalAnswer())
+window['-ANSFIN-'].Update(FinalAnswer()) # adds the final answer to the existing window
 window['-WKDLAB-'].Update("Worked Answer:")
-window['-WKDBTN-'].Update(visible=True)
+window['-WKDBTN-'].Update(visible=True) # adds a button to view the worked answer to the existing window
 
 event, values = window.read()
 
@@ -189,39 +186,33 @@ event, values = window.read()
 if event == '-WKDBTN-':
 
 	if Selection == True: # differentiation
-		layout = [[gui.Text("Differentiation")],
-				  [gui.Text("Differentiating "), gui.Text(Equation)],
-				  [gui.Text("Pair exponents and coefficients together")],
-				  [gui.Text("Coefficients: "), gui.Text(str(coefficient))],
-				  [gui.Text("Exponents: "), gui.Text(str(exponent))],
-				  [gui.Text("Multiply together the pairs of exponents and coefficients to make the new coefficients.")],
-				  [gui.Text("New coefficients: "), gui.Text(str(newcoeff))],
-				  [gui.Text("decrease each of your exponents by one")],
-				  [gui.Text("New exponents: "), gui.Text(str(newexp))],
-				  [gui.Text("Recombine the new coefficients and exponents into one equation:")],
-				  [gui.Text(FinalAnswer())]]
-		window3 = gui.Window(title="Worked Answer", layout=layout)
+		window3 = gui.Window(title="Worked Answer", layout=[[gui.Text("Differentiation")],
+															[gui.Text("Differentiating " + Equation)],
+															[gui.Text("Pair exponents and coefficients together")],
+															[gui.Text("Coefficients: " + str(coefficient))],
+															[gui.Text("Exponents: " + str(exponent))],
+															[gui.Text("Multiply together the pairs of exponents and coefficients to make the new coefficients.")],
+															[gui.Text("New coefficients: " + str(newcoeff)), gui.Text(str(newcoeff))],
+															[gui.Text("Decrease each of your exponents by one")],
+															[gui.Text("New exponents: " + str(newexp))],
+															[gui.Text("Recombine the new coefficients and exponents into one equation:")],
+															[gui.Text(FinalAnswer())]])
 	else: # integration
-		layout = [[gui.Text("Integration")],
-				  [gui.Text("Integrating "), gui.Text(Equation), gui.Text("between"), gui.Text(str(LL)), gui.Text(" and "), gui.Text(str(UL))],
-				  [gui.Text("Pair exponents and coefficients together")],
-				  [gui.Text("Coefficients: "), gui.Text(str(coefficient))],
-				  [gui.Text("Exponents: "), gui.Text(exponent)],
-				  [gui.Text("Increase exponents by one")],
-				  [gui.Text("New exponents: "), gui.Text(newexp)],
-				  [gui.Text("Divide coefficients by the new exponents")],
-				  [gui.Text("New coefficients: "), gui.Text(newcoeff)],
-				  [gui.Text("Recombine the new coefficients and exponents into one equation")],
-				  [gui.Text("Substitute your upper and lower bounds for x")],
-				  [gui.Text("Take your equation for the lower bound and take it away from the equation for the upper bound")]
-				  [gui.Text("Area under the curve "), gui.Text(Equation), gui.Text("between"), gui.Text(str(LL)), gui.Text(" and "), gui.Text(str(UL)), gui.Text(" is "), gui.Text(FinalAnswer())]]
-		window3 = gui.Window(title="Worked Answer", layout=layout)
-
-	
+		window3 = gui.Window(title="Worked Answer", layout=[[gui.Text("Integration")],
+															[gui.Text("Integrating " + Equation + " between " + str(LL) + " and " + str(UL))],
+															[gui.Text("Pair exponents and coefficients together")],
+															[gui.Text("Coefficients: " + str(coefficient))],
+															[gui.Text("Exponents: " + str(exponent))],
+															[gui.Text("Increase exponents by one")],
+															[gui.Text("New exponents: " + str(newexp))],
+															[gui.Text("Divide coefficients by the new exponents")],
+															[gui.Text("New coefficients: " + str(newcoeff))],
+															[gui.Text("Recombine the new coefficients and exponents into one equation")],
+															[gui.Text("Substitute your upper and lower bounds for x")],
+															[gui.Text("Take your equation for the lower bound and take it away from the equation for the upper bound")],
+															[gui.Text("Area under the curve " + str(Equation) + " between " + str(LL) + " and " + str(UL) + " is " + str(FinalAnswer()))]])
 	window3.Finalize
-	#mdProcessor = markdown.Markdown(extensions=['mathjax'])
-	#equation = mdProcessor.convert(r"int_2^4(5x^2-3x+6)dx")
+	event, values = window3.read()
 else:
 	event, values = window.read()
 event, values = window.read()
-
