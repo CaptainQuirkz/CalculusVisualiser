@@ -36,7 +36,7 @@ while True:
 		  window2.Close()
 		  break
 		EQ = values['-EQ-']
-		check = re.match('^(([\+\-]?\d*\/?\d*x?\^?[\+\-]?\d*\/?\d*))+$', EQ)
+		check = re.match('^(([\+\-\.]?\d*\/?\d*x?\^?[\+\-]?\d*\/?\d*))+$', EQ)
 		if bool(check) == False:
 			gui.popup("Please Enter a Valid equation")
 			window2.finalize()
